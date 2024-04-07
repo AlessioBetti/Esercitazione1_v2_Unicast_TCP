@@ -62,12 +62,14 @@ public class ClientTCP {
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
             
-            while(!messaggio.equals("FINE")){
-                System.out.println("Messaggio da inviare al server: \n");
+            while(true){
+                System.out.print("> \n");
                 try {
                     messaggio = keyboard.readLine();
-                    System.out.println("Invio del messaggio in corso...\n");
-                    dos.writeBytes(messaggio + "\n");
+                    if(messaggio.equals("esci")){
+                        break;
+                    }
+                    dos.writeBytes(messaggio);
                 } catch (IOException ex) {
                     Logger.getLogger(ClientTCP.class.getName()).log(Level.SEVERE, null, ex);
                 }

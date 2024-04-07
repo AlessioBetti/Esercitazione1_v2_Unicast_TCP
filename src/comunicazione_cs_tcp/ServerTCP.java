@@ -56,19 +56,19 @@ public class ServerTCP {
     }
     
     public void leggi(){
-        while(!stringaRicevuta.equals("FINE")){
-            try {
+        try{
+            while(true){
                 stringaClient = new BufferedReader(new InputStreamReader (client.getInputStream()));
                 dos = new DataOutputStream(client.getOutputStream());
                 stringaRicevuta = stringaClient.readLine();
                 dos.writeBytes(stringaRicevuta + "[stringa ricevuta e trasmessa]\n");
                 System.out.println("Stringa ricevuta: " + stringaRicevuta);
                 scrivi();
-                
-            } catch (IOException ex) {
+            }
+            
+        } catch (IOException ex) {
                 Logger.getLogger(ServerTCP.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
         
         System.out.println("Chiusura della connessione...");
         chiudi();
