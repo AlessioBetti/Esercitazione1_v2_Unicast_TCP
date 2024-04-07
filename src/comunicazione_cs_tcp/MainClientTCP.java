@@ -38,7 +38,7 @@ public class MainClientTCP {
         
         ClientTCP client = new ClientTCP(nome, colore);
         client.connetti("localhost", 6789);
-        
+       
         try {
             client.comunica();
         } catch (IOException ex) {

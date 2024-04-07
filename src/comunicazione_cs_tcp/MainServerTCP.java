@@ -12,7 +12,7 @@ public class MainServerTCP {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        
+       
        ServerTCP server = new ServerTCP(6789);
         server.attendi();
         server.comunica();

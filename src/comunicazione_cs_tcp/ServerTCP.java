@@ -69,7 +69,7 @@ public class ServerTCP {
                 Logger.getLogger(ServerTCP.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-         
+        
         System.out.println("Chiusura della connessione...");
         chiudi();
     }
