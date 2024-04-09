@@ -49,33 +49,27 @@ public class ClientTCP {
         return socket;
     }
     
-    public void comunica(){
+    public void comunica() throws IOException{
         scrivi();
+        leggi();
     }
     
-    public void scrivi(){
+    public void scrivi()throws IOException{
          
             InputStreamReader input = new InputStreamReader(System.in);
             BufferedReader keyboard = new BufferedReader(input);
             
-        try {
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(ClientTCP.class.getName()).log(Level.SEVERE, null, ex);
-        }
             
-            System.out.print("Il server contera' le vocali presenti nella tua stringa \n");
             while(true){
-                String stringaNome = ("[" + this.nome + "] ");
-                cambioColore(stringaNome, colore);
+                System.out.print("> \n");
                 try {
                     messaggio = keyboard.readLine();
                     if(messaggio.equals("esci")){
                         break;
                     }
-                    dos.writeBytes(messaggio + "\n");
-                    leggi();
+                    dos.writeBytes(messaggio);
                 } catch (IOException ex) {
                     Logger.getLogger(ClientTCP.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -91,35 +85,11 @@ public class ClientTCP {
         System.out.println("In attesa di una risposta dal server...\n");
         try {
             String risposta = dis.readLine();
-            System.out.println(risposta + "\n");
+            System.out.println("Risposta del server: " + risposta + "\n");
         } catch (IOException ex) {
             Logger.getLogger(ClientTCP.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }
-    
-    public void cambioColore(String text, String colore){
-        nome = this.nome;
-        colore = this.colore;
-        String stringaNome = null;
-        
-        String ANSI_RESET = "\u001B[0m";
-        String ANSI_RED = "\u001B[31m";
-        String ANSI_GREEN = "\u001B[32m";
-        String ANSI_YELLOW = "\u001B[33m";
-        String ANSI_BLUE = "\u001B[34m";
-        
-        System.out.println("-------------------");
-        
-        switch (colore) {
-            
-            case "rosso" -> System.out.println(ANSI_RED + text + ANSI_RESET);
-            case "giallo" -> System.out.println(ANSI_YELLOW + text + ANSI_RESET);
-            case "blu" -> System.out.println(ANSI_BLUE + text + ANSI_RESET);
-            case "verde" -> System.out.println(ANSI_GREEN + text + ANSI_RESET);
-            
-            default -> System.out.println("Colore non riconosciuto!");
-        }
     }
     
     public void chiudi(){

@@ -37,10 +37,13 @@ public class MainClientTCP {
         }
         
         ClientTCP client = new ClientTCP(nome, colore);
-        client.cambioColore(nome, colore);
         client.connetti("localhost", 6789);
        
-        client.comunica();
+        try {
+            client.comunica();
+        } catch (IOException ex) {
+            Logger.getLogger(MainClientTCP.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
