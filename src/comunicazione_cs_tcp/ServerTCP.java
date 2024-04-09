@@ -29,17 +29,17 @@ public class ServerTCP {
          
         try {
             System.out.println("Server attivo");
-            System.out.println(" ___________________________________________\n");
+            System.out.println("---------------------------");
             
             server = new ServerSocket(porta); //inizializzazione del servizio
             System.out.println("Server in ascolto");
             System.out.println("porta: " + porta + "");
-            System.out.println(" ___________________________________________\n");
+            System.out.println("---------------------------");
             
             
             client = server.accept(); //il server si mette in ascolto sulla porta precedentemente aperta
             System.out.println("      Connessione con un client stabilita!");
-            System.out.println(" ___________________________________________\n");
+           System.out.println("---------------------------");
             
             stringaClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
             dos = new DataOutputStream(client.getOutputStream());
@@ -61,7 +61,7 @@ public class ServerTCP {
                 stringaClient = new BufferedReader(new InputStreamReader (client.getInputStream()));
                 dos = new DataOutputStream(client.getOutputStream());
                 stringaRicevuta = stringaClient.readLine();
-                dos.writeBytes(stringaRicevuta + "[stringa ricevuta e trasmessa]\n");
+                
                 System.out.println("Stringa ricevuta: " + stringaRicevuta);
                 scrivi();
             }
@@ -76,9 +76,12 @@ public class ServerTCP {
     
     public void scrivi(){
         try {
+            dos = new DataOutputStream(client.getOutputStream());
+            
             System.out.println("Elaborazione della stringa...");
             int risposta = contaVocali(stringaRicevuta);
-            dos.writeBytes("risposta: " + risposta);
+            String stringaRisposta = ("[SERVER] - risposta: " + risposta);
+            dos.writeBytes(stringaRisposta + "\n");
             System.out.println("Elaborazione terminata");
         } catch (IOException ex) {
             Logger.getLogger(ServerTCP.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,8 +94,7 @@ public class ServerTCP {
     
     public void chiudi(){
         try {
-            dos.writeBytes(stringaRicevuta + "chiusura del server incorso...\n");
-            System.out.println("Echo sul server in chiusura: " + stringaRicevuta);
+            server.close();
         } catch (IOException ex) {
             Logger.getLogger(ServerTCP.class.getName()).log(Level.SEVERE, null, ex);
         }
